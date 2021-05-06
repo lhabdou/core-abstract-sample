@@ -24,6 +24,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.example.demo.dto.in.ShoeFilter.Color;
+import com.example.demo.dto.out.Shoe;
 import com.example.demo.dto.out.Shoes;
 import com.example.demo.dto.out.Stock;
 import com.example.demo.dto.out.Stock.State;
@@ -47,6 +49,8 @@ public class StockControllerTest {
 
 	private Stock stock;
 
+	private Shoe shoe;
+
 	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
@@ -55,6 +59,8 @@ public class StockControllerTest {
 
 		stock = Stock.builder().shoes(Shoes.builder().shoes(Collections.emptyList()).build()).state(State.EMPTY)
 				.totalQuantity(BigInteger.ZERO).build();
+
+		shoe = Shoe.builder().name("model1").size(BigInteger.valueOf(42)).color(Color.BLACK).quantity(BigInteger.TEN).build();
 	}
 
 	@Test
@@ -85,7 +91,22 @@ public class StockControllerTest {
 				.andExpect(jsonPath("$.creationDate", is(this.stock.getCreationDate())));
 
 	}
+	
+	
+	@Test
+	public void addShoeToStockOkTest() throws Exception {
 
+		Mockito.when(this.stockService.addShoeToStock((Shoe)Mockito.any())).thenReturn(this.shoe);
+		this.mockMvc
+				.perform(MockMvcRequestBuilders.put("/shoes/stock/shoe").contentType(MediaType.APPLICATION_JSON)
+						.content(convertObjectToJson(this.shoe)).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andExpect(jsonPath("$.name", is(this.shoe.getName())))
+				.andExpect(jsonPath("$.size", is(this.shoe.getSize().intValue())))
+				.andExpect(jsonPath("$.quantity", is(this.shoe.getQuantity().intValue())))
+				.andExpect(jsonPath("$.color", is(this.shoe.getColor().toString())));
+
+	}
+	
 	/**
 	 * Méthode pour convertir le flux JSON en Bytes
 	 * 
@@ -100,5 +121,16 @@ public class StockControllerTest {
 		mapper.setSerializationInclusion(Include.NON_NULL);
 
 		return mapper.writeValueAsBytes(object);
+	}
+	
+	@Test
+	public void removeShoeFromStockOkTest() throws Exception {
+
+		Mockito.when(this.stockService.removeShoeFromStock((Shoe)Mockito.any())).thenReturn(0);
+		this.mockMvc
+				.perform(MockMvcRequestBuilders.put("/shoes/stock/shoe").contentType(MediaType.APPLICATION_JSON)
+						.content(convertObjectToJson(this.shoe)).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andReturn();
+
 	}
 }

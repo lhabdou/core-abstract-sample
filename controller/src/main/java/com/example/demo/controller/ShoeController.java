@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ShoeController {
 
+	@Value("${message.version}")
+	private String versionMessage;
+	
 	private final ShoeFacade shoeFacade;
 
 	@GetMapping(path = "/search")
@@ -28,7 +32,7 @@ public class ShoeController {
 
 		ShoeCore shoeCore = shoeFacade.get(version);
 		if (shoeCore == null) {
-			throw new VersionException("Versions available 1 or 2, you put invalid value: " + version , 2);
+			throw new VersionException(versionMessage + version , 2);
 		}
 		return ResponseEntity.ok(shoeCore.search(filter));
 	}

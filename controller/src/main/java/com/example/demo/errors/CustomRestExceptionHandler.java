@@ -3,6 +3,7 @@ package com.example.demo.errors;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
@@ -61,8 +62,18 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 	
 	
-	@ExceptionHandler({ VersionException.class })
-	public ResponseEntity<Object> handleConstraintViolation(VersionException ex, WebRequest request) {
+	@ExceptionHandler({ VersionException.class,  })
+	public ResponseEntity<Object> handleVersionNotValid(VersionException ex, WebRequest request) {
+		List<String> errors = new ArrayList<String>();
+
+		errors.add(ex.getMessage());
+
+		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
+		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+	}
+	
+	@ExceptionHandler({ EntityNotFoundException.class,  })
+	public ResponseEntity<Object> handleVersionNotValid(EntityNotFoundException ex, WebRequest request) {
 		List<String> errors = new ArrayList<String>();
 
 		errors.add(ex.getMessage());
