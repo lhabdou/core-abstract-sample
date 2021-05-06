@@ -12,15 +12,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @EqualsAndHashCode
 @Entity
 @Table(name = "shoe")
+@Builder
 public class ShoeEntity implements Serializable {
 
 	private static final long serialVersionUID = -7073048837058601737L;
