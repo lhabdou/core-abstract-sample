@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.demo.core.ShoeCore;
 import com.example.demo.dto.in.ShoeFilter;
 import com.example.demo.dto.out.Shoes;
+import com.example.demo.errors.VersionException;
 import com.example.demo.facade.ShoeFacade;
 
 import io.swagger.annotations.ApiOperation;
@@ -20,12 +22,15 @@ public class ShoeController {
 
 	private final ShoeFacade shoeFacade;
 
-
 	@GetMapping(path = "/search")
 	@ApiOperation(value = "Return all shoes models specify")
-	public ResponseEntity<Shoes> all(ShoeFilter filter, @RequestHeader Integer version) {
+	public ResponseEntity<Shoes> all(ShoeFilter filter, @RequestHeader Integer version) throws VersionException {
 
-		return ResponseEntity.ok(shoeFacade.get(version).search(filter));
+		ShoeCore shoeCore = shoeFacade.get(version);
+		if (shoeCore == null) {
+			throw new VersionException("Versions available 1 or 2, you put invalid value: " + version , 2);
+		}
+		return ResponseEntity.ok(shoeCore.search(filter));
 	}
 
 }

@@ -23,12 +23,6 @@ import com.example.demo.services.exception.QuantityException;
 @ControllerAdvice
 public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 
-	@ExceptionHandler(value = { IllegalArgumentException.class, IllegalStateException.class })
-	protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
-		String bodyOfResponse = "This should be application specific";
-		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
-	}
-
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -57,7 +51,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	@ExceptionHandler({ QuantityException.class })
-	public ResponseEntity<Object> handleConstraintViolation(QuantityException ex, WebRequest request) {
+	public ResponseEntity<Object> handleQuantityCapacity(QuantityException ex, WebRequest request) {
 		List<String> errors = new ArrayList<String>();
 
 		errors.add(ex.getMessage());
@@ -65,8 +59,18 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiError apiError = new ApiError(HttpStatus.UNPROCESSABLE_ENTITY, ex.getLocalizedMessage(), errors);
 		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
+	
+	
+	@ExceptionHandler({ VersionException.class })
+	public ResponseEntity<Object> handleConstraintViolation(VersionException ex, WebRequest request) {
+		List<String> errors = new ArrayList<String>();
 
-	@ExceptionHandler(value = Exception.class)
+		errors.add(ex.getMessage());
+
+		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
+		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+	}
+
 	@Override
 	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
