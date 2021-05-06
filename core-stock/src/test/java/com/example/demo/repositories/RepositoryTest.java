@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -12,9 +13,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Example;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
+import com.example.demo.dto.in.ShoeFilter.Color;
 import com.example.demo.entities.ShoeEntity;
 import com.example.demo.entities.StockEntity;
 
@@ -27,21 +30,22 @@ public class RepositoryTest {
 
 	@Autowired
 	private ShoeRepository shoeRepository;
-	
+
 	@BeforeEach
 	public void initDB() {
-		
+
 	}
 
 	@Test
 	public void verifieLeNombreDhistoriqueDeStockDoitRetourner3Test() {
-		List<StockEntity> stocks =   this.stockRepository.findAll();
+		List<StockEntity> stocks = this.stockRepository.findAll();
 		assertThat(stocks).isNotEmpty();
-		assertThat(stocks.size()).isEqualTo(3);	}
+		assertThat(stocks.size()).isEqualTo(3);
+	}
 
 	@Test
 	public void verifieLeNombreDeModelDeChaussureDoitRetournerLNombreTotaldesModelsTest() {
-		List<ShoeEntity> shoes =   this.shoeRepository.findAll();
+		List<ShoeEntity> shoes = this.shoeRepository.findAll();
 		assertThat(shoes).isNotEmpty();
 		assertThat(shoes.size()).isEqualTo(15);
 	}
@@ -83,6 +87,35 @@ public class RepositoryTest {
 		assertThat(stockRepository.count()).isEqualTo(3);
 		StockEntity stockEntity = this.stockRepository.getCurrentStockWithShoes();
 		assertThat(stockEntity.getShoesEntity()).isNotEmpty();
+
+	}
+
+	@Test
+	public void recupererUnePaireDeChaussureAvecQuelquesCriteres() {
+
+		ShoeEntity shoeEntity = new ShoeEntity();
+		shoeEntity.setColor(Color.BLACK.toString());
+		shoeEntity.setSize(BigInteger.valueOf(42));
+		shoeEntity.setQuantity(null);
+		Example<ShoeEntity> example = Example.of(shoeEntity);
+		
+		assertThat(this.shoeRepository.exists(example)).isTrue();
+		
+		Optional<ShoeEntity> optionalShoeEntity = this.shoeRepository.findOne(example);
+		assertThat(optionalShoeEntity.get()).isNotNull();
+
+	}
+	
+	@Test
+	public void recupererUnePaireDeChaussureQuiNexistePas() {
+
+		ShoeEntity shoeEntity = new ShoeEntity();
+		shoeEntity.setColor(Color.BLACK.toString());
+		shoeEntity.setSize(BigInteger.valueOf(100));
+		shoeEntity.setQuantity(BigInteger.ONE);
+		Example<ShoeEntity> example = Example.of(shoeEntity);
+		
+		assertThat(this.shoeRepository.exists(example)).isFalse();
 
 	}
 

@@ -13,25 +13,27 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 @Value
 @Builder
 @JsonDeserialize(builder = ShoeBuilder.class)
+@RequiredArgsConstructor
 public class Shoe {
 
 	private String name;
-	
+
 	@NotNull
 	@NotEmpty
 	@Min(13)
 	@Max(60)
 	private BigInteger size;
-	
+
 	@NotNull
 	@NotEmpty
 	private Color color;
-	
+
 	@NotNull
 	@NotEmpty
 	@Min(0)
