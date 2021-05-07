@@ -126,7 +126,7 @@ public class StockControllerTest {
 	@Test
 	public void removeShoeFromStockOkTest() throws Exception {
 
-		Mockito.when(this.stockService.removeShoeFromStock((Shoe) Mockito.any())).thenReturn(0);
+		Mockito.when(this.stockService.removeShoeFromStock((Shoe) Mockito.any())).thenReturn("Suppression OK");
 		this.mockMvc
 				.perform(MockMvcRequestBuilders.put("/shoes/stock/shoe").contentType(MediaType.APPLICATION_JSON)
 						.content(convertObjectToJson(this.shoe)).accept(MediaType.APPLICATION_JSON))

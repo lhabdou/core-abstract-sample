@@ -147,7 +147,7 @@ public class StockServiceImpl implements IStockService {
 	}
 
 	@Override
-	public Integer removeShoeFromStock(@Valid @NotNull Shoe shoe) throws EntityNotFoundException, QuantityException {
+	public String removeShoeFromStock(@Valid @NotNull Shoe shoe) throws EntityNotFoundException, QuantityException {
 
 		Example<ShoeEntity> example = prepareExampleMatcherShoeToSearch(shoe);
 
@@ -172,8 +172,8 @@ public class StockServiceImpl implements IStockService {
 			logger.warn(" [StockServiceImpl.removeShoeToStock] La quantité est insufisante, quantité présente: "
 					+ shoeEntity.getQuantity() + " quantité à retirer: " + shoe.getQuantity());
 			throw new QuantityException(
-					"[StockServiceImpl.removeShoeToStock] La quantité à retirer, soit: " + shoe.getQuantity()
-							+ " est supérieure à la quantité disponible, soit: " + shoeEntity.getQuantity(),
+					"[StockServiceImpl.removeShoeToStock] La quantité à retirer, qui vaut: " + shoe.getQuantity()
+							+ " est supérieure à la quantité disponible, qui vaut: " + shoeEntity.getQuantity(),
 					4);
 		}
 		// si oui enlever la quantite demandée
@@ -187,7 +187,7 @@ public class StockServiceImpl implements IStockService {
 		stockEntity.setTotalQuantity(stockEntity.getTotalQuantity() - shoe.getQuantity().intValue());
 		stockRepository.save(stockEntity);
 
-		return 0;
+		return "Suppression OK";
 	}
 
 	/**

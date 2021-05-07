@@ -322,9 +322,9 @@ class StockServiceImplTest {
 		when(this.shoeRepository.save(Mockito.any())).thenReturn(shoeEntityFound);
 		ReflectionTestUtils.setField(stockServiceImpl, "messageCapacity", MESSAGE_ERROR_CAPACITY);
 
-		Integer result = stockServiceImpl.removeShoeFromStock(this.shoeToAdd);
+		String result = stockServiceImpl.removeShoeFromStock(this.shoeToAdd);
 
-		assertThat(result).isEqualTo(0);
+		assertThat(result).isEqualTo("Suppression OK");
 	}
 
 }

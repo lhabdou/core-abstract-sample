@@ -41,6 +41,6 @@ public interface IStockService {
 	 * @throws EntityNotFoundException
 	 * @throws QuantityException 
 	 */
-	Integer removeShoeFromStock(Shoe shoe) throws EntityNotFoundException, QuantityException;
+	String removeShoeFromStock(Shoe shoe) throws EntityNotFoundException, QuantityException;
 
 }
