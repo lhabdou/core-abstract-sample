@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 
 import com.example.demo.dto.out.Shoe;
 import com.example.demo.dto.out.Stock;
@@ -42,5 +43,14 @@ public interface IStockService {
 	 * @throws QuantityException 
 	 */
 	String removeShoeFromStock(Shoe shoe) throws EntityNotFoundException, QuantityException;
+
+	/**
+	 * Méthode permettant de retourner un modèle de chaussure
+	 * présent dans le stock
+	 * 
+	 * @param shoe
+	 * @return
+	 */
+	Shoe getShoeFromStock(@Valid Shoe shoe);
 
 }

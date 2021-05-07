@@ -31,12 +31,11 @@ import com.example.demo.services.exception.QuantityException;
 @PropertySource("classpath:messages.properties")
 public class StockServiceImpl implements IStockService {
 
-
 	private static final Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
 
 	@Value("${message.capacity_max_30}")
 	public String messageCapacity;
-	
+
 	@Value("${message.success}")
 	private String messageSuccess;
 
@@ -206,6 +205,20 @@ public class StockServiceImpl implements IStockService {
 
 		Example<ShoeEntity> example = Example.of(shoeToSearch);
 		return example;
+	}
+
+	@Override
+	public Shoe getShoeFromStock(@Valid Shoe shoe) {
+
+		Optional<ShoeEntity> shoeOptionnal = this.shoeRepository.findOne(prepareExampleMatcherShoeToSearch(shoe));
+
+		ShoeEntity shoeEntity = null;
+
+		if (shoeOptionnal != null) {
+			shoeEntity = shoeOptionnal.get();
+		}
+
+		return this.stockMapper.shoeEntityToShoe(shoeEntity);
 	}
 
 }

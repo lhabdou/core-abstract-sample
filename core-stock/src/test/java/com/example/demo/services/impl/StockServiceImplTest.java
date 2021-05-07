@@ -328,5 +328,28 @@ class StockServiceImplTest {
 
 		assertThat(result).isEqualTo(messageSuccess );
 	}
+	
+	@Test
+	void getShoeTestWithShoeOK() {
+
+		Optional<ShoeEntity> shoeOptional = Optional.of(shoeEntityFound);
+		when(this.shoeRepository.findOne(Mockito.any())).thenReturn(shoeOptional);
+		when(this.stockMapper.shoeEntityToShoe(this.shoeEntityFound)).thenReturn(shoeToAdd);
+		Shoe shoeResult = stockServiceImpl.getShoeFromStock(this.shoeToAdd);
+
+		assertThat(shoeResult).isNotNull();
+
+	}
+	
+	@Test
+	void getShoeTestWithShoeReturnNull() {
+
+		when(this.shoeRepository.findOne(Mockito.any())).thenReturn(null);
+		when(this.stockMapper.shoeEntityToShoe(this.shoeEntityFound)).thenReturn(shoeToAdd);
+		Shoe shoeResult = stockServiceImpl.getShoeFromStock(this.shoeToAdd);
+
+		assertThat(shoeResult).isNull();
+
+	}
 
 }

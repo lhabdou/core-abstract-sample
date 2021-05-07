@@ -107,6 +107,31 @@ public class StockControllerTest {
 
 	}
 
+	@Test
+	public void removeShoeFromStockOkTest() throws Exception {
+
+		Mockito.when(this.stockService.removeShoeFromStock((Shoe) Mockito.any())).thenReturn("Suppression OK");
+		this.mockMvc
+				.perform(MockMvcRequestBuilders.put("/shoes/stock/shoe").contentType(MediaType.APPLICATION_JSON)
+						.content(convertObjectToJson(this.shoe)).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andReturn();
+
+	}
+
+	@Test
+	public void getShoeToStockOKTest() throws Exception {
+
+		Mockito.when(stockService.getShoeFromStock(Mockito.any())).thenReturn(this.shoe);
+
+		this.mockMvc
+				.perform(MockMvcRequestBuilders.get("/shoes/stock/shoe").contentType(MediaType.APPLICATION_JSON)
+						.content(convertObjectToJson(this.shoe)).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andExpect(jsonPath("$.name", is(this.shoe.getName())))
+				.andExpect(jsonPath("$.size", is(this.shoe.getSize().intValue())))
+				.andExpect(jsonPath("$.quantity", is(this.shoe.getQuantity().intValue())))
+				.andExpect(jsonPath("$.color", is(this.shoe.getColor().toString())));
+	}
+
 	/**
 	 * Méthode pour convertir le flux JSON en Bytes
 	 * 
@@ -121,16 +146,5 @@ public class StockControllerTest {
 		mapper.setSerializationInclusion(Include.NON_NULL);
 
 		return mapper.writeValueAsBytes(object);
-	}
-
-	@Test
-	public void removeShoeFromStockOkTest() throws Exception {
-
-		Mockito.when(this.stockService.removeShoeFromStock((Shoe) Mockito.any())).thenReturn("Suppression OK");
-		this.mockMvc
-				.perform(MockMvcRequestBuilders.put("/shoes/stock/shoe").contentType(MediaType.APPLICATION_JSON)
-						.content(convertObjectToJson(this.shoe)).accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk()).andReturn();
-
 	}
 }

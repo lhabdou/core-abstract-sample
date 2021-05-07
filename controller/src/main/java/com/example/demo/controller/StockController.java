@@ -52,6 +52,14 @@ public class StockController {
 		return ResponseEntity.ok(stockService.addShoeToStock(shoe));
 
 	}
+	
+	@GetMapping(path = "/stock/shoe")
+	@ApiOperation(value = "Get shoe from the stock")
+	public ResponseEntity<?> getShoeFromStock(@Valid Shoe shoe) throws QuantityException {
+
+		return ResponseEntity.ok(stockService.getShoeFromStock(shoe));
+
+	}
 
 	@DeleteMapping(path = "/stock/shoe/remove")
 	@ApiOperation(value = "Remove shoe or shoes from the stock")
