@@ -31,10 +31,14 @@ import com.example.demo.services.exception.QuantityException;
 @PropertySource("classpath:messages.properties")
 public class StockServiceImpl implements IStockService {
 
+
 	private static final Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
 
 	@Value("${message.capacity_max_30}")
 	public String messageCapacity;
+	
+	@Value("${message.success}")
+	private String messageSuccess;
 
 	@Autowired
 	private StockRepository stockRepository;
@@ -187,7 +191,7 @@ public class StockServiceImpl implements IStockService {
 		stockEntity.setTotalQuantity(stockEntity.getTotalQuantity() - shoe.getQuantity().intValue());
 		stockRepository.save(stockEntity);
 
-		return "Suppression OK";
+		return messageSuccess;
 	}
 
 	/**

@@ -19,7 +19,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -37,7 +36,6 @@ import com.example.demo.services.exception.QuantityException;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
-@PropertySource("classpath:messages.properties")
 class StockServiceImplTest {
 
 	private static final String MESSAGE_ERROR_CAPACITY = "Verify the total quantity or the the total sum of the shoes, can't be more than 30 or it's equal to: ";
@@ -63,6 +61,8 @@ class StockServiceImplTest {
 	private ShoeEntity shoeToSearch;
 
 	private ShoeEntity shoeEntityFound;
+
+	private String messageSuccess = "Suppression OK";
 
 	@BeforeEach
 	public void setUp() {
@@ -321,10 +321,12 @@ class StockServiceImplTest {
 		when(this.stockMapper.shoeEntityToShoe(shoeEntityFound)).thenReturn(shoeToAdd);
 		when(this.shoeRepository.save(Mockito.any())).thenReturn(shoeEntityFound);
 		ReflectionTestUtils.setField(stockServiceImpl, "messageCapacity", MESSAGE_ERROR_CAPACITY);
+		ReflectionTestUtils.setField(stockServiceImpl, "messageSuccess", messageSuccess);
+
 
 		String result = stockServiceImpl.removeShoeFromStock(this.shoeToAdd);
 
-		assertThat(result).isEqualTo("Suppression OK");
+		assertThat(result).isEqualTo(messageSuccess );
 	}
 
 }
