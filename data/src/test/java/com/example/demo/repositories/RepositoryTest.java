@@ -17,7 +17,6 @@ import org.springframework.data.domain.Example;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
-import com.example.demo.dto.in.ShoeFilter.Color;
 import com.example.demo.entities.ShoeEntity;
 import com.example.demo.entities.StockEntity;
 
@@ -94,7 +93,7 @@ public class RepositoryTest {
 	public void recupererUnePaireDeChaussureAvecQuelquesCriteres() {
 
 		ShoeEntity shoeEntity =  new ShoeEntity();
-		shoeEntity.setColor(Color.BLACK.toString());
+		shoeEntity.setColor("BLACK");
 		shoeEntity.setSize(BigInteger.valueOf(42));
 		
 		Example<ShoeEntity> example = Example.of(shoeEntity);
@@ -110,7 +109,7 @@ public class RepositoryTest {
 	public void recupererUnePaireDeChaussureQuiNexistePas() {
 
 		ShoeEntity shoeEntity =  new ShoeEntity();
-		shoeEntity.setColor(Color.BLACK.toString());
+		shoeEntity.setColor("BLACK");
 		shoeEntity.setId(BigInteger.TWO);
 		shoeEntity.setQuantity(BigInteger.valueOf(100));
 		shoeEntity.setSize(BigInteger.valueOf(200));

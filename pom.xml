@@ -12,6 +12,7 @@
 		<module>core-legacy</module>
 		<module>core-new</module>
 		<module>core-stock</module>
+		<module>data</module>
 	</modules>
 
 	<parent>

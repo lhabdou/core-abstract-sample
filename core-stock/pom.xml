@@ -10,12 +10,17 @@
 	<artifactId>core-stock</artifactId>
 	<version>${parent.version}</version>
 	<name>core-new</name>
-	<description>Core new our third</description>
+	<description>Core for the stock gestion</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.example</groupId>
-			<artifactId>core</artifactId>
+			<artifactId>data</artifactId>
+			<version>${parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.example</groupId>
+			<artifactId>dto</artifactId>
 			<version>${parent.version}</version>
 		</dependency>
 		<dependency>
