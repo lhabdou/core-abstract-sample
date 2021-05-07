@@ -68,14 +68,17 @@ class StockServiceImplTest {
 	public void setUp() {
 		stockEntity = new StockEntity();
 		stockEntity.setId(BigInteger.ONE);
-		stockEntity.setTotalQuantity(10);
+		stockEntity.setTotalQuantity(9);
 
 		this.shoeToAdd = Shoe.builder().size(BigInteger.valueOf(42)).color(Color.BLACK).name("model100")
 				.quantity(BigInteger.valueOf(10)).build();
 
-		shoeToSearch = ShoeEntity.builder().color(Color.BLACK.toString()).size(BigInteger.valueOf(42)).build();
+		shoeToSearch = new ShoeEntity();
+		shoeToSearch.setColor(Color.BLACK.toString());
+		shoeToSearch.setSize(BigInteger.valueOf(42));
 
-		shoeEntityFound = ShoeEntity.builder().id(BigInteger.ONE).quantity(BigInteger.TEN).build();
+		shoeEntityFound = new ShoeEntity();
+		shoeEntityFound.setColor(Color.BLACK.toString());
 		shoeEntityFound.setId(BigInteger.ONE);
 		shoeEntityFound.setQuantity(BigInteger.valueOf(9));
 
@@ -235,8 +238,11 @@ class StockServiceImplTest {
 	@Test
 	void addShoeNewModelToStockReturnShoeSaved() throws QuantityException {
 
-		ShoeEntity shoeEntity = ShoeEntity.builder().color(Color.BLACK.toString()).id(BigInteger.TWO)
-				.size(BigInteger.valueOf(43)).quantity(BigInteger.valueOf(4)).build();
+		ShoeEntity shoeEntity = new ShoeEntity();
+		shoeEntity.setColor(Color.BLACK.toString());
+		shoeEntity.setId(BigInteger.TWO);
+		shoeEntity.setQuantity(BigInteger.valueOf(4));
+
 		when(this.stockMapper.shoeToShoeEntity(this.shoeToAdd)).thenReturn(shoeEntity);
 		when(this.stockMapper.stockEntityToStock(this.stockEntity)).thenReturn(this.stock);
 		when(this.shoeRepository.exists(Mockito.any())).thenReturn(Boolean.FALSE);
@@ -255,8 +261,10 @@ class StockServiceImplTest {
 	@Test
 	void removeShoeNotExistFromStockReturnException() {
 
-		ShoeEntity shoeEntity = ShoeEntity.builder().color(Color.BLACK.toString()).id(BigInteger.TWO)
-				.size(BigInteger.valueOf(43)).quantity(BigInteger.valueOf(4)).build();
+		ShoeEntity shoeEntity = new ShoeEntity();
+		shoeEntity.setColor(Color.BLACK.toString());
+		shoeEntity.setId(BigInteger.TWO);
+		shoeEntity.setQuantity(BigInteger.valueOf(4));
 		when(this.stockMapper.shoeToShoeEntity(this.shoeToAdd)).thenReturn(shoeEntity);
 		when(this.stockMapper.stockEntityToStock(this.stockEntity)).thenReturn(this.stock);
 		when(this.shoeRepository.exists(Mockito.any())).thenReturn(Boolean.FALSE);
@@ -275,8 +283,10 @@ class StockServiceImplTest {
 	@Test
 	void removeShoeExistButQuantityOverStockSoReturnException() {
 
-		ShoeEntity shoeEntity = ShoeEntity.builder().color(Color.BLACK.toString()).id(BigInteger.TWO)
-				.size(BigInteger.valueOf(43)).quantity(BigInteger.valueOf(4)).build();
+		ShoeEntity shoeEntity = new ShoeEntity();
+		shoeEntity.setColor(Color.BLACK.toString());
+		shoeEntity.setId(BigInteger.TWO);
+		shoeEntity.setQuantity(BigInteger.valueOf(1));
 		when(this.stockMapper.shoeToShoeEntity(this.shoeToAdd)).thenReturn(shoeEntity);
 		when(this.stockMapper.stockEntityToStock(this.stockEntity)).thenReturn(this.stock);
 		when(this.shoeRepository.exists(Mockito.any())).thenReturn(Boolean.TRUE);
@@ -299,8 +309,8 @@ class StockServiceImplTest {
 		this.shoeToAdd = Shoe.builder().size(BigInteger.valueOf(42)).color(Color.BLACK).name("model100")
 				.quantity(BigInteger.valueOf(1)).build();
 
-		ShoeEntity shoeEntity = ShoeEntity.builder().color(Color.BLACK.toString()).id(BigInteger.TWO)
-				.size(BigInteger.valueOf(43)).quantity(BigInteger.valueOf(4)).build();
+		ShoeEntity shoeEntity = new ShoeEntity();
+		shoeEntity.setQuantity(BigInteger.valueOf(4));
 		when(this.stockMapper.shoeToShoeEntity(this.shoeToAdd)).thenReturn(shoeEntity);
 		when(this.stockMapper.stockEntityToStock(this.stockEntity)).thenReturn(this.stock);
 		when(this.shoeRepository.exists(Mockito.any())).thenReturn(Boolean.TRUE);

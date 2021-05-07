@@ -93,8 +93,10 @@ public class RepositoryTest {
 	@Test
 	public void recupererUnePaireDeChaussureAvecQuelquesCriteres() {
 
-		ShoeEntity shoeEntity = ShoeEntity.builder().size(BigInteger.valueOf(42)).color(Color.BLACK.toString()).build();
-
+		ShoeEntity shoeEntity =  new ShoeEntity();
+		shoeEntity.setColor(Color.BLACK.toString());
+		shoeEntity.setSize(BigInteger.valueOf(42));
+		
 		Example<ShoeEntity> example = Example.of(shoeEntity);
 
 		assertThat(this.shoeRepository.exists(example)).isTrue();
@@ -107,8 +109,11 @@ public class RepositoryTest {
 	@Test
 	public void recupererUnePaireDeChaussureQuiNexistePas() {
 
-		ShoeEntity shoeEntity = ShoeEntity.builder().size(BigInteger.valueOf(100)).color(Color.BLACK.toString())
-				.id(BigInteger.ONE).build();
+		ShoeEntity shoeEntity =  new ShoeEntity();
+		shoeEntity.setColor(Color.BLACK.toString());
+		shoeEntity.setId(BigInteger.TWO);
+		shoeEntity.setQuantity(BigInteger.valueOf(100));
+		shoeEntity.setSize(BigInteger.valueOf(200));
 		Example<ShoeEntity> example = Example.of(shoeEntity);
 
 		assertThat(this.shoeRepository.exists(example)).isFalse();

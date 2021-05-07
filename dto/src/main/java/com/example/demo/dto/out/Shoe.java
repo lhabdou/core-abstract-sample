@@ -13,11 +13,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 @Value
 @Builder
 @JsonDeserialize(builder = ShoeBuilder.class)
+@RequiredArgsConstructor
 public class Shoe {
 
 	private String name;

@@ -60,7 +60,8 @@ public class StockControllerTest {
 		stock = Stock.builder().shoes(Shoes.builder().shoes(Collections.emptyList()).build()).state(State.EMPTY)
 				.totalQuantity(BigInteger.ZERO).build();
 
-		shoe = Shoe.builder().name("model1").size(BigInteger.valueOf(42)).color(Color.BLACK).quantity(BigInteger.TEN).build();
+		shoe = Shoe.builder().name("model1").size(BigInteger.valueOf(42)).color(Color.BLACK).quantity(BigInteger.TEN)
+				.build();
 	}
 
 	@Test
@@ -91,12 +92,11 @@ public class StockControllerTest {
 				.andExpect(jsonPath("$.creationDate", is(this.stock.getCreationDate())));
 
 	}
-	
-	
+
 	@Test
 	public void addShoeToStockOkTest() throws Exception {
 
-		Mockito.when(this.stockService.addShoeToStock((Shoe)Mockito.any())).thenReturn(this.shoe);
+		Mockito.when(this.stockService.addShoeToStock((Shoe) Mockito.any())).thenReturn(this.shoe);
 		this.mockMvc
 				.perform(MockMvcRequestBuilders.put("/shoes/stock/shoe").contentType(MediaType.APPLICATION_JSON)
 						.content(convertObjectToJson(this.shoe)).accept(MediaType.APPLICATION_JSON))
@@ -106,7 +106,7 @@ public class StockControllerTest {
 				.andExpect(jsonPath("$.color", is(this.shoe.getColor().toString())));
 
 	}
-	
+
 	/**
 	 * Méthode pour convertir le flux JSON en Bytes
 	 * 
@@ -122,11 +122,11 @@ public class StockControllerTest {
 
 		return mapper.writeValueAsBytes(object);
 	}
-	
+
 	@Test
 	public void removeShoeFromStockOkTest() throws Exception {
 
-		Mockito.when(this.stockService.removeShoeFromStock((Shoe)Mockito.any())).thenReturn(0);
+		Mockito.when(this.stockService.removeShoeFromStock((Shoe) Mockito.any())).thenReturn(0);
 		this.mockMvc
 				.perform(MockMvcRequestBuilders.put("/shoes/stock/shoe").contentType(MediaType.APPLICATION_JSON)
 						.content(convertObjectToJson(this.shoe)).accept(MediaType.APPLICATION_JSON))

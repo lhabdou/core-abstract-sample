@@ -94,7 +94,7 @@ public class StockServiceImpl implements IStockService {
 		// verifier que le stock n'est pas full
 		StockEntity stockEntity = stockRepository.getCurrentStock();
 		Stock stock = stockMapper.stockEntityToStock(stockEntity);
-		ShoeEntity shoeEntity = ShoeEntity.builder().quantity(BigInteger.ZERO).build();
+		ShoeEntity shoeEntity = new ShoeEntity();
 		if (State.FULL.equals(stock.getState())) {
 
 			// si full lever une exception
@@ -196,7 +196,9 @@ public class StockServiceImpl implements IStockService {
 	 */
 	private Example<ShoeEntity> prepareExampleMatcherShoeToSearch(Shoe shoe) {
 
-		ShoeEntity shoeToSearch = ShoeEntity.builder().size(shoe.getSize()).color(shoe.getColor().toString()).build();
+		ShoeEntity shoeToSearch = new ShoeEntity();
+		shoeToSearch.setSize(shoe.getSize());
+		shoeToSearch.setColor(shoe.getColor().toString());
 
 		Example<ShoeEntity> example = Example.of(shoeToSearch);
 		return example;
