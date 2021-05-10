@@ -194,6 +194,8 @@ public class StockServiceImpl implements IStockService {
 	}
 
 	/**
+	 * Prépare les critères de recherche
+	 * 
 	 * @param shoe
 	 * @return Example<ShoeEntity>
 	 */

@@ -16,6 +16,12 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.Builder;
 import lombok.Value;
 
+/**
+ * dto représentant le stock 
+ * 
+ * @author asoilihi
+ *
+ */
 @Value
 @Builder
 @JsonDeserialize(builder = StockBuilder.class)

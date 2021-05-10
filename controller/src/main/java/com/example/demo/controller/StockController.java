@@ -21,6 +21,13 @@ import com.example.demo.services.exception.QuantityException;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Controller qui expose les services des 
+ * opération liées aux stock
+ *
+ * @author asoilihi
+ *
+ */
 @Controller
 @RequestMapping(path = "/shoes")
 @RequiredArgsConstructor

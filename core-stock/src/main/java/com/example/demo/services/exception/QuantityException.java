@@ -4,6 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Exception générée lorsqu'un problème concernant 
+ * la quantité est rencontrée
+ * 
+ * @author asoilihi
+ *
+ */
 @Getter
 @Setter
 @AllArgsConstructor

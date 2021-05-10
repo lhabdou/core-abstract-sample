@@ -13,6 +13,12 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
 
+/**
+ * Classe de configuration du swagger
+ * 
+ * @author asoilihi
+ *
+ */
 @Configuration
 public class SpringFoxConfig {                                    
    

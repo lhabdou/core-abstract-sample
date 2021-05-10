@@ -5,6 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Controller redirigeant vers le swagger
+ * 
+ * @author asoilihi
+ *
+ */
 @Controller
 public class MainController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)

@@ -21,6 +21,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.example.demo.services.exception.QuantityException;
 
+/**
+ * CustomRestExceptionHandler permettant de catcher les 
+ * exceptions de nos services REST et de les formatter
+ * 
+ * @author asoilihi
+ *
+ */
 @ControllerAdvice
 public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 

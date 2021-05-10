@@ -1,6 +1,5 @@
 package com.example.demo.entities;
 
-import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.Set;
@@ -21,21 +20,25 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * L'entitée représentant un un stock à une date donnée
+ * 
+ * @author asoilihi
+ *
+ */
 @Getter
 @Setter
 @Entity
 @ToString
 @Table(name = "stock")
-public class StockEntity implements Serializable {
-
-	private static final long serialVersionUID = 2120511417522816893L;
+public class StockEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private BigInteger id;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "stock")
-    @OrderBy
+	@OrderBy
 	private Set<ShoeEntity> shoesEntity;
 
 	private Integer totalQuantity;

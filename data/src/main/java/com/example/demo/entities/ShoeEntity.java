@@ -1,6 +1,5 @@
 package com.example.demo.entities;
 
-import java.io.Serializable;
 import java.math.BigInteger;
 
 import javax.persistence.Column;
@@ -17,16 +16,19 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
+/**
+ * L'entitée ShoeEntity représentant une paire de chaussure
+ * 
+ * @author asoilihi
+ *
+ */
 @EqualsAndHashCode
 @Entity
 @Table(name = "shoe")
 @ToString
 @Getter
 @Setter
-public class ShoeEntity implements Serializable {
-
-	private static final long serialVersionUID = -7073048837058601737L;
+public class ShoeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,13 +42,12 @@ public class ShoeEntity implements Serializable {
 
 	@Column(name = "color")
 	private String color;
-	
+
 	@Column(name = "quantity")
 	private BigInteger quantity;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_stock", referencedColumnName = "id")
 	private StockEntity stock;
-
 
 }

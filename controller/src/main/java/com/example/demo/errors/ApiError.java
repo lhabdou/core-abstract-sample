@@ -8,6 +8,13 @@ import org.springframework.http.HttpStatus;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Classe ApiError permettant de formatter les exceptions 
+ * éventuelles générées par l'application
+ * 
+ * @author asoilihi
+ *
+ */
 @Getter
 @Setter
 public class ApiError {

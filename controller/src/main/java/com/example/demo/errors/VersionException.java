@@ -4,6 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Exception générée lorsque l'utilisateur saisie un numéro de 
+ * version non existante (hors 1 ou 2)
+ * 
+ * @author asoilihi
+ *
+ */
 @Getter
 @Setter
 @AllArgsConstructor
